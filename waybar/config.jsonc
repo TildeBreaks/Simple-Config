@@ -1,0 +1,125 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["niri/workspaces", "custom/keybindings"],
+    "modules-center": ["clock", "custom/system-monitor"],
+    "modules-right": ["pulseaudio", "network", "battery", "tray"],
+
+    "niri/workspaces": {
+        "format": "{name}",
+        "format-icons": {
+            "1": "󰙯",
+            "2": "󰙯",
+            "3": "󰙯",
+            "4": "󰙯",
+            "5": "󰙯",
+            "6": "󰙯",
+            "7": "󰙯",
+            "8": "󰙯",
+            "active": "",
+            "current": "",
+            "urgent": ""
+        },
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": []
+        }
+    },
+
+    "custom/keybindings": {
+        "format": "⌨️  Keybindings",
+        "tooltip": false,
+        "on-click": "eww open keybinding-popup || eww close keybinding-popup",
+        "on-click-middle": "eww close keybinding-popup"
+    },
+
+    "custom/system-monitor": {
+        "format": "󰍛 {}%",
+        "exec": "sh -c 'cat /proc/loadavg | awk '\\''{print $1}'\\''",
+        "interval": 5,
+        "tooltip": true,
+        "tooltip-format": "CPU Load: {}\\nClick to open system monitor",
+        "on-click": "eww open system-monitor || eww close system-monitor"
+    },
+
+    "clock": {
+        "format": " {:%H:%M}",
+        "format-alt": " {:%Y-%m-%d}",
+        "tooltip-format": "{:%Y-%m-%d %H:%M:%S}",
+        "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":     "<span color=''#ffead3''><b>{}</b></span>",
+                "days":       "<span color=''#ecc6d9''><b>{}</b></span>",
+                "weeks":      "<span color=''#99ffdd''><b>W{}</b></span>",
+                "weekdays":   "<span color=''#ffcc66''><b>{}</b></span>",
+                "today":      "<span color=''#ff6699''><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "tooltip-format": "{desc} - {volume}%"
+    },
+
+    "network": {
+        "format-wifi": " {essid}",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "⚠ Disconnected",
+        "format-alt": "󰤨 {signalStrength}%",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\\n⬆️ {bandwidthUpBits}\\n⬇️ {bandwidthDownBits}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "⚡ {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{timeTo} {power}W"
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}

@@ -1,0 +1,406 @@
+@import "catppuccin";
+
+* {
+  all: unset;
+  font-family: "JetBrains Mono Nerd Font", monospace;
+  font-size: 12px;
+}
+
+.bar {
+  background: $base;
+  border-bottom: 1px solid $surface0;
+  padding: 0 16px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.workspaces {
+  margin-right: 20px;
+}
+
+.workspace-button {
+  background: $surface0;
+  color: $text;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $surface1;
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: linear-gradient(45deg, $blue, $lavender);
+    color: $base;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba($blue, 0.3);
+  }
+}
+
+.system-info {
+  background: transparent;
+  padding: 0 20px;
+}
+
+.cpu-widget,
+.memory-widget,
+.time-widget {
+  background: $surface0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $surface1;
+    transform: translateY(-1px);
+  }
+}
+
+.cpu-label,
+.memory-label,
+.time-label {
+  color: $blue;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.cpu-value,
+.memory-value {
+  color: $text;
+  font-weight: 500;
+}
+
+.time-label {
+  color: $yellow;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.date-label {
+  color: $subtext1;
+  font-size: 10px;
+}
+
+.progress {
+  background: $surface1;
+  border-radius: 4px;
+  trough {
+    background: $surface0;
+    border-radius: 4px;
+  }
+  progress {
+    background: linear-gradient(90deg, $blue, $lavender);
+    border-radius: 4px;
+    min-height: 4px;
+  }
+}
+
+.cpu-progress progress {
+  background: linear-gradient(90deg, $green, $teal);
+}
+
+.memory-progress progress {
+  background: linear-gradient(90deg, $peach, $maroon);
+}
+
+.right-widgets {
+  margin-left: 20px;
+}
+
+.volume-widget,
+.network-widget,
+.battery-widget {
+  background: $surface0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $surface1;
+    transform: translateY(-1px);
+  }
+}
+
+.volume-button {
+  background: none;
+  border: none;
+  color: $blue;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $surface1;
+    color: $lavender;
+  }
+}
+
+.volume-label {
+  color: $text;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+.network-icon {
+  color: $teal;
+}
+
+.network-label {
+  color: $text;
+}
+
+.battery-icon {
+  color: $yellow;
+}
+
+.battery-label {
+  color: $text;
+}
+
+.keybinding-manager,
+.system-monitor {
+  background: $base;
+  border: 1px solid $surface0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.popup-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $surface0;
+}
+
+.popup-title {
+  color: $text;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.close-button {
+  background: $red;
+  color: $base;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $maroon;
+    transform: scale(1.05);
+  }
+}
+
+.keybindings-scroll {
+  max-height: 400px;
+}
+
+.keybindings-list {
+  background: $mantle;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.keybinding-item {
+  background: $surface0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $surface1;
+    transform: translateX(4px);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.keybinding-info {
+  flex: 1;
+}
+
+.keybinding-keys {
+  background: $blue;
+  color: $base;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.keybinding-action {
+  color: $text;
+  font-weight: 500;
+}
+
+.keybinding-controls {
+  .execute-button,
+  .edit-button {
+    background: none;
+    border: 1px solid $surface1;
+    color: $subtext1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $blue;
+      color: $blue;
+    }
+  }
+
+  .execute-button:hover {
+    background: $green;
+    border-color: $green;
+    color: $base;
+  }
+}
+
+.monitor-grid {
+  background: $mantle;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.monitor-section {
+  background: $surface0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.section-title {
+  color: $blue;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.section-value {
+  color: $text;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.section-detail {
+  color: $subtext1;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.network-status {
+  color: $text;
+  font-weight: 500;
+}
+
+.network-detail {
+  color: $subtext1;
+  font-size: 11px;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.keybinding-manager,
+.system-monitor {
+  animation: slideIn 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+  .bar {
+    padding: 0 8px;
+  }
+
+  .workspaces {
+    margin-right: 12px;
+  }
+
+  .workspace-button {
+    padding: 6px 8px;
+    margin: 0 2px;
+    font-size: 11px;
+  }
+
+  .system-info {
+    padding: 0 12px;
+  }
+
+  .cpu-widget,
+  .memory-widget,
+  .time-widget {
+    padding: 6px 8px;
+  }
+
+  .right-widgets {
+    margin-left: 12px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .bar {
+    background: $crust;
+    border-bottom-color: $surface1;
+  }
+
+  .workspace-button {
+    background: $surface1;
+    color: $text;
+
+    &:hover {
+      background: $surface2;
+    }
+
+    &.active {
+      background: linear-gradient(45deg, $blue, $lavender);
+      color: $crust;
+    }
+  }
+
+  .keybinding-manager,
+  .system-monitor {
+    background: $crust;
+    border-color: $surface1;
+  }
+
+  .keybindings-list,
+  .monitor-grid {
+    background: $base;
+  }
+
+  .keybinding-item,
+  .monitor-section {
+    background: $surface1;
+
+    &:hover {
+      background: $surface2;
+    }
+  }
+}

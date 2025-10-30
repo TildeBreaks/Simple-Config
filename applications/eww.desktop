@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=EWW
+Comment=ElKowars wacky widgets
+Exec=eww daemon
+Terminal=false
+Categories=System;

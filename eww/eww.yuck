@@ -1,0 +1,249 @@
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                       :y "0%"
+                       :width "100%"
+                       :height "40px"
+                       :anchor "top center")
+  :reserve (struts :side "top" :distance "40px")
+  :stacking "fg"
+  :focusable false
+  (center-box
+    :class "bar"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    (workspaces)
+    (system-info)
+    (right-widgets)))
+
+(defwindow keybinding-popup
+  :monitor 0
+  :geometry (geometry :x "50%"
+                       :y "50%"
+                       :width "800px"
+                       :height "600px"
+                       :anchor "center")
+  :stacking "overlay"
+  :focusable true
+  (keybinding-manager))
+
+(defwindow system-monitor
+  :monitor 0
+  :geometry (geometry :x "50%"
+                       :y "50%"
+                       :width "400px"
+                       :height "300px"
+                       :anchor "center")
+  :stacking "overlay"
+  :focusable true
+  (system-monitor-widget))
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :spacing 8
+    (for workspace in workspaces
+      (button :class "workspace-button"
+              :onclick "niri-msg action focus-workspace --no-transition ${workspace.id}"
+              :class-name "${workspace.id == active_workspace ? 'active' : ''}"
+        (label :text "${workspace.name}")))))
+
+(defwidget system-info []
+  (box :class "system-info"
+       :orientation "h"
+       :space-evenly false
+       :halign "center"
+       :spacing 16
+    (cpu-widget)
+    (memory-widget)
+    (time-widget)))
+
+(defwidget cpu-widget []
+  (box :class "cpu-widget"
+       :orientation "v"
+       :spacing 4
+    (label :class "cpu-label"
+            :text "󰍛 CPU")
+    (progress :value "${cpu_usage}"
+              :class "cpu-progress"
+              :style "min-width: 100px;")
+    (label :class "cpu-value"
+            :text "${cpu_usage}%")))
+
+(defwidget memory-widget []
+  (box :class "memory-widget"
+       :orientation "v"
+       :spacing 4
+    (label :class "memory-label"
+            :text "󰍹 MEM")
+    (progress :value "${memory_usage}"
+              :class "memory-progress"
+              :style "min-width: 100px;")
+    (label :class "memory-value"
+            :text "${memory_usage}%")))
+
+(defwidget time-widget []
+  (box :class "time-widget"
+       :orientation "v"
+       :spacing 4
+    (label :class "time-label"
+            :text "${time['%H:%M']}")
+    (label :class "date-label"
+            :text "${time['%Y-%m-%d']}")))
+
+(defwidget right-widgets []
+  (box :class "right-widgets"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :spacing 12
+    (volume-widget)
+    (network-widget)
+    (battery-widget)))
+
+(defwidget volume-widget []
+  (box :class "volume-widget"
+       :orientation "h"
+       :spacing 8
+    (button :onclick "amixer set Master 5%+"
+            :class "volume-button"
+      (label :text "󰝝"))
+    (label :class "volume-label"
+            :text "${volume}%")
+    (button :onclick "amixer set Master 5%-"
+            :class "volume-button"
+      (label :text "󰝞"))))
+
+(defwidget network-widget []
+  (box :class "network-widget"
+       :orientation "h"
+       :spacing 8
+    (label :class "network-icon"
+            :text "${network.connected ? '󰖩' : '󰖪'}")
+    (label :class "network-label"
+            :text "${network.connected ? network.ssid : 'Disconnected'}")))
+
+(defwidget battery-widget []
+  (box :class "battery-widget"
+       :orientation "h"
+       :spacing 8
+    (label :class "battery-icon"
+            :text "${battery_icon}")
+    (label :class "battery-label"
+            :text "${battery.capacity}%")))
+
+(defwidget keybinding-manager []
+  (box :class "keybinding-manager"
+       :orientation "v"
+       :spacing 16
+    (box :class "popup-header"
+         :orientation "h"
+         :space-evenly false
+         :halign "space-between"
+      (label :class "popup-title"
+              :text "⌨️ Keybinding Manager")
+      (button :class "close-button"
+              :onclick "eww close keybinding-popup"
+        (label :text "✕")))
+    (scroll :class "keybindings-scroll"
+            :hscroll true
+            :vscroll true
+      (box :class "keybindings-list"
+           :orientation "v"
+           :spacing 8
+        (for binding in keybindings
+          (box :class "keybinding-item"
+               :orientation "h"
+               :space-evenly false
+               :halign "space-between"
+            (box :class "keybinding-info"
+                 :orientation "h"
+                 :spacing 12
+              (label :class "keybinding-keys"
+                      :text "${binding.keys}")
+              (label :class "keybinding-action"
+                      :text "${binding.action}"))
+            (box :class "keybinding-controls"
+                 :orientation "h"
+                 :spacing 8
+              (button :class "execute-button"
+                      :onclick "sh -c '${binding.command}'"
+                (label :text "▶"))
+              (button :class "edit-button"
+                      :onclick "eww update editing_keybinding=${binding.id}"
+                (label :text "✏")))))))))
+
+(defwidget system-monitor-widget []
+  (box :class "system-monitor"
+       :orientation "v"
+       :spacing 16
+    (box :class "popup-header"
+         :orientation "h"
+         :space-evenly false
+         :halign "space-between"
+      (label :class "popup-title"
+              :text "󰍛 System Monitor")
+      (button :class "close-button"
+              :onclick "eww close system-monitor"
+        (label :text "✕")))
+    (box :class "monitor-grid"
+         :orientation "v"
+         :spacing 12
+      (cpu-details)
+      (memory-details)
+      (disk-details)
+      (network-details))))
+
+(defwidget cpu-details []
+  (box :class "monitor-section"
+       :orientation "v"
+       :spacing 8
+    (label :class "section-title"
+            :text "CPU Usage")
+    (progress :value "${cpu_usage}"
+              :class "cpu-progress")
+    (label :class "section-value"
+            :text "${cpu_usage}%")
+    (label :class "section-detail"
+            :text "Load Average: ${load_avg}")))
+
+(defwidget memory-details []
+  (box :class "monitor-section"
+       :orientation "v"
+       :spacing 8
+    (label :class "section-title"
+            :text "Memory Usage")
+    (progress :value "${memory_usage}"
+              :class "memory-progress")
+    (label :class "section-value"
+            :text "${memory_usage}%")
+    (label :class "section-detail"
+            :text "Used: ${memory_used}GB / Total: ${memory_total}GB")))
+
+(defwidget disk-details []
+  (box :class "monitor-section"
+       :orientation "v"
+       :spacing 8
+    (label :class "section-title"
+            :text "Disk Usage")
+    (progress :value "${disk_usage}"
+              :class "disk-progress")
+    (label :class "section-value"
+            :text "${disk_usage}%")
+    (label :class "section-detail"
+            :text "Used: ${disk_used}GB / Total: ${disk_total}GB")))
+
+(defwidget network-details []
+  (box :class "monitor-section"
+       :orientation "v"
+       :spacing 8
+    (label :class "section-title"
+            :text "Network")
+    (label :class "network-status"
+            :text "${network.connected ? 'Connected' : 'Disconnected'}")
+    (label :class "network-detail"
+            :text "${network.connected ? network.ssid : 'No connection'}")))

@@ -1,0 +1,131 @@
+input {
+    keyboard {
+        repeat-delay 600
+        repeat-rate 25
+        xkb {
+            layout "us"
+        }
+    }
+
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+    }
+
+    mouse {
+        natural-scroll
+    }
+}
+
+output "eDP-1" {
+    // Your existing monitor settings will be preserved
+    // This is a placeholder - actual settings from your config will be maintained
+}
+
+layout {
+    gaps 8
+    center-focused-column "on"
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    preset-window-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+    default-window-width { proportion 0.5; }
+}
+
+animations {
+    enable true
+    slow-down 0.8
+}
+
+define-workspace "1" { max-columns 8 }
+define-workspace "2" { max-columns 8 }
+define-workspace "3" { max-columns 8 }
+define-workspace "4" { max-columns 8 }
+define-workspace "5" { max-columns 8 }
+define-workspace "6" { max-columns 8 }
+define-workspace "7" { max-columns 8 }
+define-workspace "8" { max-columns 8 }
+
+window-rule {
+    match app-id="firefox"
+    open-floating false
+}
+
+window-rule {
+    match app-id="foot"
+    open-floating false
+}
+
+window-rule {
+    match app-id="pavucontrol"
+    open-floating true
+    width 640
+    height 480
+    center true
+}
+
+binds {
+    // Application launchers
+    Mod+Space { spawn "sh" "-c" "eww open keybinding-popup || eww close keybinding-popup" }
+    Mod+Return { spawn "foot" }
+    Mod+D { spawn "fuzzel" }
+    Mod+B { spawn "firefox" }
+    Mod+N { spawn "nautilus" }
+
+    // Window management
+    Mod+Q { close-window }
+    Mod+F { toggle-float }
+    Mod+M { maximize-column }
+
+    // Workspace navigation
+    Mod+1 { focus-workspace 1 }
+    Mod+2 { focus-workspace 2 }
+    Mod+3 { focus-workspace 3 }
+    Mod+4 { focus-workspace 4 }
+    Mod+5 { focus-workspace 5 }
+    Mod+6 { focus-workspace 6 }
+    Mod+7 { focus-workspace 7 }
+    Mod+8 { focus-workspace 8 }
+
+    Mod+Shift+1 { move-column-to-workspace 1 }
+    Mod+Shift+2 { move-column-to-workspace 2 }
+    Mod+Shift+3 { move-column-to-workspace 3 }
+    Mod+Shift+4 { move-column-to-workspace 4 }
+    Mod+Shift+5 { move-column-to-workspace 5 }
+    Mod+Shift+6 { move-column-to-workspace 6 }
+    Mod+Shift+7 { move-column-to-workspace 7 }
+    Mod+Shift+8 { move-column-to-workspace 8 }
+
+    // System controls
+    Mod+Shift+R { reload-config }
+    Mod+P { spawn "sh" "-c" "playerctl play-pause" }
+    Mod+Shift+P { spawn "sh" "-c" "playerctl next" }
+
+    // Volume controls
+    XF86AudioRaiseVolume { spawn "sh" "-c" "pamixer -i 5 && eww update volume=\$(pamixer --get-volume)" }
+    XF86AudioLowerVolume { spawn "sh" "-c" "pamixer -d 5 && eww update volume=\$(pamixer --get-volume)" }
+    XF86AudioMute { spawn "sh" "-c" "pamixer -t && eww update volume=\$(pamixer --get-volume)" }
+
+    // Brightness controls
+    XF86MonBrightnessUp { spawn "sh" "-c" "brightnessctl s +5% && eww update brightness=\$(brightnessctl g)" }
+    XF86MonBrightnessDown { spawn "sh" "-c" "brightnessctl s 5%- && eww update brightness=\$(brightnessctl g)" }
+}
+
+environment {
+    DISPLAY ":1"
+    WAYLAND_DISPLAY "wayland-1"
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_SESSION_DESKTOP "niri"
+}
+
+spawn-at-startup "waybar"
+spawn-at-startup "eww" "daemon"
+spawn-at-startup "sleep" "2" "eww" "open" "bar"
