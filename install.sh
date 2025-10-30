@@ -77,19 +77,68 @@ create_backup() {
 install_dependencies() {
     print_info "Installing dependencies..."
 
+    local deps=("waybar" "playerctl" "brightnessctl" "pamixer" "jq")
+    local pm_install_cmd=""
+    local pm_update_cmd=""
+
+    # Detect package manager for standard dependencies
     if command -v pacman &> /dev/null; then
-        print_info "Detected Arch Linux - installing with pacman..."
-        sudo pacman -S --needed waybar eww playerctl brightnessctl pamixer jq
+        print_info "Detected Arch Linux..."
+        pm_install_cmd="sudo pacman -S --needed"
     elif command -v apt &> /dev/null; then
-        print_info "Detected Debian/Ubuntu - installing with apt..."
-        sudo apt update
-        sudo apt install -y waybar eww playerctl brightnessctl pamixer jq
+        print_info "Detected Debian/Ubuntu..."
+        pm_update_cmd="sudo apt update"
+        pm_install_cmd="sudo apt install -y"
     elif command -v dnf &> /dev/null; then
-        print_info "Detected Fedora - installing with dnf..."
-        sudo dnf install -y waybar eww playerctl brightnessctl pamixer jq
+        print_info "Detected Fedora..."
+        pm_install_cmd="sudo dnf install -y"
     else
-        print_warning "Could not detect package manager"
-        print_info "Please install manually: waybar, eww, playerctl, brightnessctl, pamixer, jq"
+        print_warning "Could not detect a common package manager."
+        print_info "Please ensure the following are installed manually: ${deps[*]} eww"
+        return
+    fi
+
+    # Install standard dependencies
+    if [ -n "$pm_install_cmd" ]; then
+        print_info "Installing: ${deps[*]}"
+        if [ -n "$pm_update_cmd" ]; then
+            $pm_update_cmd
+        fi
+        $pm_install_cmd "${deps[@]}"
+    fi
+
+    # Handle EWW installation separately, as it's often not in standard repos
+    if command -v eww &> /dev/null; then
+        print_success "EWW is already installed."
+    else
+        print_info "Attempting to install EWW..."
+        if command -v pacman &> /dev/null; then
+            # Arch Linux: check for AUR helper
+            if command -v yay &> /dev/null; then
+                print_info "Found 'yay' AUR helper, using it to install eww."
+                yay -S --needed eww
+            elif command -v paru &> /dev/null; then
+                print_info "Found 'paru' AUR helper, using it to install eww."
+                paru -S --needed eww
+            else
+                print_warning "'eww' not found and no AUR helper (yay/paru) detected."
+                print_info "Please install 'eww' from the AUR manually and re-run the script."
+                exit 1
+            fi
+        else
+            # Other distros: Guide user to manual installation
+            print_warning "'eww' command not found."
+            print_info "On Debian, Ubuntu, Fedora, and other distributions, 'eww' often requires manual installation."
+            print_info "Please visit https://elkowars.github.io/eww/eww.html for installation instructions."
+            print_info "After installing EWW, please re-run this script."
+            exit 1
+        fi
+    fi
+
+    # Final check for EWW
+    if ! command -v eww &> /dev/null; then
+        print_error "EWW installation failed or was skipped. Please install it manually and re-run."
+        exit 1
     fi
 }
 
