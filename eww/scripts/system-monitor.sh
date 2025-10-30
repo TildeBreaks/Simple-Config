@@ -134,10 +134,21 @@ get_time() {
     date '+%H:%M|%Y-%m-%d'
 }
 
+# Function to get disk usage for root filesystem
+get_disk_usage() {
+    local disk_info=$(df -h /)
+    local disk_usage=$(echo "$disk_info" | awk 'NR==2 {print $5}' | tr -d '%')
+    local disk_used=$(echo "$disk_info" | awk 'NR==2 {print $3}' | tr -d 'G')
+    local disk_total=$(echo "$disk_info" | awk 'NR==2 {print $2}' | tr -d 'G')
+
+    echo "$disk_usage|$disk_used|$disk_total"
+}
+
 # Function to generate JSON output for EWW
 generate_json() {
     local cpu_usage=$(get_cpu_usage)
     local memory_info=$(get_memory_usage)
+    local disk_info=$(get_disk_usage)
     local network_info=$(get_network_status)
     local battery_info=$(get_battery_status)
     local volume_info=$(get_volume)
@@ -146,6 +157,7 @@ generate_json() {
     local time_info=$(get_time)
 
     IFS='|' read -r memory_usage memory_used memory_total <<< "$memory_info"
+    IFS='|' read -r disk_usage disk_used disk_total <<< "$disk_info"
     IFS='|' read -r network_connected network_type network_ssid <<< "$network_info"
     IFS='|' read -r battery_capacity battery_status <<< "$battery_info"
     IFS='|' read -r volume_level volume_muted <<< "$volume_info"
@@ -155,8 +167,11 @@ generate_json() {
 {
   "cpu_usage": $cpu_usage,
   "memory_usage": $memory_usage,
-  "memory_used": $memory_used,
-  "memory_total": $memory_total,
+  "memory_used": "$memory_used",
+  "memory_total": "$memory_total",
+  "disk_usage": $disk_usage,
+  "disk_used": "$disk_used",
+  "disk_total": "$disk_total",
   "network": {
     "connected": $network_connected,
     "type": "$network_type",
@@ -191,10 +206,12 @@ update_eww() {
     local brightness=$(echo "$json_data" | jq -r '.brightness')
     local time=$(echo "$json_data" | jq -r '.time.time')
     local date=$(echo "$json_data" | jq -r '.time.date')
+    local disk_usage=$(echo "$json_data" | jq -r '.disk_usage')
 
     if pgrep -x "eww" > /dev/null; then
         eww update cpu_usage="$cpu_usage"
         eww update memory_usage="$memory_usage"
+        eww update disk_usage="$disk_usage"
         eww update network_connected="$network_connected"
         eww update battery_capacity="$battery_capacity"
         eww update volume="$volume"
@@ -213,6 +230,9 @@ case "${1:-}" in
         ;;
     "memory")
         get_memory_usage
+        ;;
+    "disk")
+        get_disk_usage
         ;;
     "network")
         get_network_status
@@ -240,11 +260,12 @@ case "${1:-}" in
         ;;
     *)
         echo "System Monitor Script for EWW"
-        echo "Usage: $0 {cpu|memory|network|battery|volume|brightness|load|time|json|update}"
+        echo "Usage: $0 {cpu|memory|disk|network|battery|volume|brightness|load|time|json|update}"
         echo ""
         echo "Commands:"
         echo "  cpu                  - Get CPU usage percentage"
         echo "  memory               - Get memory usage"
+        echo "  disk                 - Get disk usage for root filesystem"
         echo "  network              - Get network status"
         echo "  battery              - Get battery status"
         echo "  volume               - Get volume level"

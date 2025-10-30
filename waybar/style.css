@@ -36,14 +36,12 @@ window#waybar.hidden {
 #workspaces button:hover {
     background: rgba(88, 91, 112, 0.8);
     color: #cdd6f4;
-    transform: translateY(-1px);
 }
 
 #workspaces button.active {
     background: linear-gradient(45deg, #89b4fa, #b4befe);
     color: #1e1e2e;
     font-weight: bold;
-    box-shadow: 0 2px 8px rgba(137, 180, 250, 0.3);
 }
 
 #workspaces button.current {
@@ -77,8 +75,6 @@ window#waybar.hidden {
 #network:hover,
 #battery:hover {
     background: rgba(88, 91, 112, 0.6);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #custom-keybindings {
