@@ -134,23 +134,3 @@ window#waybar.hidden {
     -gtk-icon-effect: highlight;
     background: rgba(243, 139, 168, 0.5);
 }
-
-@media (max-width: 768px) {
-    #workspaces button {
-        min-width: 25px;
-        padding: 0 6px;
-        font-size: 12px;
-    }
-
-    #custom-keybindings,
-    #custom-system-monitor,
-    #clock,
-    #pulseaudio,
-    #network,
-    #battery,
-    #tray {
-        margin: 0 2px;
-        padding: 0 8px;
-        font-size: 12px;
-    }
-}
