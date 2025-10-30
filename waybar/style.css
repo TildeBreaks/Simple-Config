@@ -154,33 +154,3 @@ window#waybar.hidden {
         font-size: 12px;
     }
 }
-
-@media (prefers-color-scheme: dark) {
-    window#waybar {
-        background: rgba(24, 24, 37, 0.9);
-        border-bottom-color: rgba(137, 180, 250, 0.1);
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    window#waybar {
-        background: rgba(255, 255, 255, 0.9);
-        color: #4c4f69;
-        border-bottom-color: rgba(137, 180, 250, 0.3);
-    }
-
-    #workspaces button {
-        background: rgba(220, 224, 232, 0.5);
-        color: #4c4f69;
-    }
-
-    #workspaces button:hover {
-        background: rgba(203, 208, 218, 0.8);
-        color: #4c4f69;
-    }
-
-    #workspaces button.active {
-        background: linear-gradient(45deg, #1e66f5, #7287fd);
-        color: #eff1f5;
-    }
-}

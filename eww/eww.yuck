@@ -1,3 +1,22 @@
+;; Global variable definitions
+(defvar cpu_usage 0)
+(defvar memory_usage 0)
+(defvar disk_usage 0)
+(defvar network_connected false)
+(defvar battery_capacity 0)
+(defvar battery_icon "󰁿")
+(defvar volume 0)
+(defvar time "{}")
+(defvar workspaces "[]")
+(defvar keybindings "[]")
+(defvar active_workspace 1)
+(defvar load_avg "0.0")
+(defvar memory_used "0")
+(defvar memory_total "0")
+(defvar disk_used "0")
+(defvar disk_total "0")
+(defvar network '{"connected": false, "ssid": "Disconnected"}')
+
 (defwindow bar
   :monitor 0
   :windowtype "dock"
