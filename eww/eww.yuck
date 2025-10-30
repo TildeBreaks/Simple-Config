@@ -27,7 +27,7 @@
   :reserve (struts :side "top" :distance "40px")
   :stacking "fg"
   :focusable false
-  (center-box
+  (box
     :class "bar"
     :orientation "h"
     :space-evenly false
