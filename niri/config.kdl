@@ -127,5 +127,3 @@ environment {
 }
 
 spawn-at-startup "waybar"
-spawn-at-startup "eww" "daemon"
-spawn-at-startup "sleep" "2" "eww" "open" "bar"

@@ -16,25 +16,13 @@
 (defvar disk_total "0")
 (defvar network '{"connected": false, "ssid": "Disconnected"}')
 
-(defwindow bar
-  :monitor 0
-  :windowtype "dock"
-  :geometry (geometry :x "0%"
-                       :y "0%"
-                       :width "100%"
-                       :height "40px"
-                       :anchor "top center")
-  :reserve (struts :side "top" :distance "40px")
-  :stacking "fg"
-  :focusable false
-  (box
-    :class "bar"
-    :orientation "h"
-    :space-evenly false
-    :halign "center"
-    (workspaces)
-    (system-info)
-    (right-widgets)))
+;; Poll for system data
+(defpoll cpu_usage :interval "2s" "scripts/system-monitor.sh cpu")
+(defpoll memory_usage :interval "2s" "scripts/system-monitor.sh memory | cut -d'|' -f1")
+(defpoll disk_usage :interval "2s" "scripts/system-monitor.sh disk | cut -d'|' -f1")
+(defpoll time :interval "1s" "date +'{\"%H:%M\": \"%H:%M\", \"%Y-%m-%d\": \"%Y-%m-%d\"}'")
+(defpoll volume :interval "1s" "scripts/system-monitor.sh volume | cut -d'|' -f1")
+(defpoll load_avg :interval "2s" "scripts/system-monitor.sh load")
 
 (defwindow keybinding-popup
   :monitor 0
@@ -57,102 +45,6 @@
   :stacking "overlay"
   :focusable true
   (system-monitor-widget))
-
-(defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly false
-       :halign "start"
-       :spacing 8
-    (for workspace in workspaces
-      (button :class "workspace-button"
-              :onclick "niri-msg action focus-workspace --no-transition ${workspace.id}"
-              :class-name "${workspace.id == active_workspace ? 'active' : ''}"
-        (label :text "${workspace.name}")))))
-
-(defwidget system-info []
-  (box :class "system-info"
-       :orientation "h"
-       :space-evenly false
-       :halign "center"
-       :spacing 16
-    (cpu-widget)
-    (memory-widget)
-    (time-widget)))
-
-(defwidget cpu-widget []
-  (box :class "cpu-widget"
-       :orientation "v"
-       :spacing 4
-    (label :class "cpu-label"
-            :text "󰍛 CPU")
-    (progress :value "${cpu_usage}"
-              :class "cpu-progress"
-              :style "min-width: 100px;")
-    (label :class "cpu-value"
-            :text "${cpu_usage}%")))
-
-(defwidget memory-widget []
-  (box :class "memory-widget"
-       :orientation "v"
-       :spacing 4
-    (label :class "memory-label"
-            :text "󰍹 MEM")
-    (progress :value "${memory_usage}"
-              :class "memory-progress"
-              :style "min-width: 100px;")
-    (label :class "memory-value"
-            :text "${memory_usage}%")))
-
-(defwidget time-widget []
-  (box :class "time-widget"
-       :orientation "v"
-       :spacing 4
-    (label :class "time-label"
-            :text "${time['%H:%M']}")
-    (label :class "date-label"
-            :text "${time['%Y-%m-%d']}")))
-
-(defwidget right-widgets []
-  (box :class "right-widgets"
-       :orientation "h"
-       :space-evenly false
-       :halign "end"
-       :spacing 12
-    (volume-widget)
-    (network-widget)
-    (battery-widget)))
-
-(defwidget volume-widget []
-  (box :class "volume-widget"
-       :orientation "h"
-       :spacing 8
-    (button :onclick "amixer set Master 5%+"
-            :class "volume-button"
-      (label :text "󰝝"))
-    (label :class "volume-label"
-            :text "${volume}%")
-    (button :onclick "amixer set Master 5%-"
-            :class "volume-button"
-      (label :text "󰝞"))))
-
-(defwidget network-widget []
-  (box :class "network-widget"
-       :orientation "h"
-       :spacing 8
-    (label :class "network-icon"
-            :text "${network.connected ? '󰖩' : '󰖪'}")
-    (label :class "network-label"
-            :text "${network.connected ? network.ssid : 'Disconnected'}")))
-
-(defwidget battery-widget []
-  (box :class "battery-widget"
-       :orientation "h"
-       :spacing 8
-    (label :class "battery-icon"
-            :text "${battery_icon}")
-    (label :class "battery-label"
-            :text "${battery.capacity}%")))
 
 (defwidget keybinding-manager []
   (box :class "keybinding-manager"

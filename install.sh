@@ -238,7 +238,6 @@ main() {
     eww daemon &
     sleep 2
     waybar &
-    eww open bar &
 
     print_success "Installation completed!"
     echo ""
