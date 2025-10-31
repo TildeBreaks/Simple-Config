@@ -2,8 +2,8 @@
     "layer": "top",
     "position": "top",
     "height": 30,
-    "modules-left": ["niri/workspaces", "custom/keybindings"],
-    "modules-center": ["clock", "custom/system-monitor"],
+    "modules-left": ["niri/workspaces", "custom/wallpaper"],
+    "modules-center": ["clock"],
     "modules-right": ["pulseaudio", "tray"],
 
     "niri/workspaces": {
@@ -33,20 +33,10 @@
         }
     },
 
-    "custom/keybindings": {
-        "format": "⌨️  Keybindings",
-        "tooltip": false,
-        "on-click": "eww open keybinding-popup || eww close keybinding-popup",
-        "on-click-middle": "eww close keybinding-popup"
-    },
-
-    "custom/system-monitor": {
-        "format": "󰍛 {}%",
-        "exec": "~/.config/eww/scripts/system-monitor.sh cpu",
-        "interval": 2,
-        "tooltip": true,
-        "tooltip-format": "CPU: {}%\\nMEM: $(~/.config/eww/scripts/system-monitor.sh memory | cut -d'|' -f1)%\\nClick to open system monitor",
-        "on-click": "eww open system-monitor || eww close system-monitor"
+    "custom/wallpaper": {
+        "format": "",
+        "tooltip": "Change Wallpaper",
+        "on-click": "~/.config/scripts/change_wallpaper.sh"
     },
 
     "clock": {

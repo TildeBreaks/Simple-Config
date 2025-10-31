@@ -198,17 +198,17 @@ proportion 0.66667
 
 focus-ring {
 width 3
-active-color "{color.primary}"
-inactive-color "{color.surface}"
-urgent-color "{color.error}"
+active-color "{{.colors.primary.default.hex}}"
+inactive-color "{{.colors.surface.default.hex}}"
+urgent-color "{{.colors.error.default.hex}}"
 }
 
 border {
 off
 width 8
-active-color "{color.primary}"
-inactive-color "{color.surface}"
-urgent-color "{color.error}"
+active-color "{{.colors.primary.default.hex}}"
+inactive-color "{{.colors.surface.default.hex}}"
+urgent-color "{{.colors.error.default.hex}}"
 }
 
 shadow {

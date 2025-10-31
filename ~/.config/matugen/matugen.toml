@@ -1,0 +1,11 @@
+[templates.niri]
+input_path = 'templates/niri.tpl'
+output_path = 'niri/config.kdl'
+
+[templates.waybar]
+input_path = 'templates/waybar.tpl'
+output_path = 'waybar/colors.css'
+
+[templates.kitty]
+input_path = 'templates/kitty.tpl'
+output_path = 'kitty/colors.conf'

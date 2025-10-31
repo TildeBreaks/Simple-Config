@@ -1,4 +1,4 @@
-@import "mocha.css";
+@import "colors.css";
 
 * {
     border: none;
@@ -9,9 +9,9 @@
 }
 
 window#waybar {
-    background: rgba(30, 30, 46, 0.8);
-    border-bottom: 1px solid rgba(137, 180, 250, 0.2);
-    color: #cdd6f4;
+    background: @background;
+    border-bottom: 1px solid @on_background;
+    color: @on_background;
     transition: all 0.3s ease;
 }
 
@@ -24,8 +24,8 @@ window#waybar.hidden {
 }
 
 #workspaces button {
-    background: rgba(49, 50, 68, 0.5);
-    color: #bac2de;
+    background: @surface;
+    color: @on_surface;
     margin: 0 2px;
     padding: 0 8px;
     border-radius: 8px;
@@ -34,85 +34,79 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-    background: rgba(88, 91, 112, 0.8);
-    color: #cdd6f4;
+    background: @primary;
+    color: @on_primary;
 }
 
 #workspaces button.active {
-    background: linear-gradient(45deg, #89b4fa, #b4befe);
-    color: #1e1e2e;
+    background: @primary;
+    color: @on_primary;
     font-weight: bold;
 }
 
 #workspaces button.current {
-    background: rgba(137, 180, 250, 0.3);
-    color: #cdd6f4;
+    background: @secondary;
+    color: @on_secondary;
 }
 
 #workspaces button.urgent {
-    background: rgba(243, 139, 168, 0.8);
-    color: #1e1e2e;
+    background: @error;
+    color: @on_error;
 }
 
-#custom-keybindings,
-#custom-system-monitor,
+#custom-wallpaper,
 #clock,
 #pulseaudio,
 #network,
 #battery,
 #tray {
-    background: rgba(49, 50, 68, 0.3);
+    background: @surface;
     margin: 0 4px;
     padding: 0 12px;
     border-radius: 12px;
     transition: all 0.3s ease;
 }
 
-#custom-keybindings:hover,
-#custom-system-monitor:hover,
+#custom-wallpaper:hover,
 #clock:hover,
 #pulseaudio:hover,
 #network:hover,
 #battery:hover {
-    background: rgba(88, 91, 112, 0.6);
+    background: @surface_variant;
 }
 
-#custom-keybindings {
-    color: #89b4fa;
+#custom-wallpaper {
+    color: @primary;
     font-weight: bold;
 }
 
-#custom-system-monitor {
-    color: #a6e3a1;
-}
-
 #clock {
-    color: #f9e2af;
+    color: @secondary;
     font-weight: bold;
 }
 
 #pulseaudio {
-    color: #f38ba8;
+    color: @tertiary;
 }
 
 #network {
-    color: #89dceb;
+    color: @primary;
 }
 
 #battery {
-    color: #f9e2af;
+    color: @secondary;
 }
 
 #battery.charging {
-    color: #a6e3a1;
+    color: @tertiary;
 }
 
 #battery.warning {
-    color: #fab387;
+    color: @error;
 }
 
 #battery.critical {
-    color: #f38ba8;
+    color: @error;
     animation: pulse 2s infinite;
 }
 
@@ -123,7 +117,7 @@ window#waybar.hidden {
 }
 
 #tray {
-    background: rgba(49, 50, 68, 0.5);
+    background: @surface;
 }
 
 #tray > .passive {
@@ -132,5 +126,5 @@ window#waybar.hidden {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background: rgba(243, 139, 168, 0.5);
+    background: @error;
 }
