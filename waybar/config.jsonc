@@ -77,19 +77,10 @@
     },
 
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-bluetooth-muted": " {icon}",
+        "format": " {volume}%",
+        "format-bluetooth": " {volume}%",
+        "format-bluetooth-muted": " ",
         "format-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
         "scroll-step": 1,
         "on-click": "pavucontrol",
         "tooltip-format": "{desc} - {volume}%"

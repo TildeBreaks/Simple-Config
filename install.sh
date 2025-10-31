@@ -258,7 +258,8 @@ main() {
     fi
     echo ""
     print_info "🎯 Key features now available:"
-    echo "   • Super+Space: Open keybinding manager"
+    echo "   • Super+Space: Open application launcher"
+    echo "   • Super+Alt+Space: Open keybinding manager"
     echo "   • Super+Enter: Launch terminal"
     echo "   • Super+Shift+Q: Close focused window"
     echo "   • System monitoring in top bar"
