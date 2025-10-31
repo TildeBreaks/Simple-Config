@@ -74,9 +74,9 @@ window-rule {
 
 binds {
     // Application launchers
-    Mod+Space { spawn "sh" "-c" "eww open keybinding-popup || eww close keybinding-popup" }
+    Mod+Space { spawn "fuzzel" }
+    Mod+Alt+Space { spawn "sh" "-c" "eww open keybinding-popup || eww close keybinding-popup" }
     Mod+Return { spawn "foot" }
-    Mod+D { spawn "fuzzel" }
     Mod+B { spawn "firefox" }
     Mod+N { spawn "nautilus" }
 
