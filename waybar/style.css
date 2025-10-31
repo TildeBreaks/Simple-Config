@@ -55,11 +55,13 @@ window#waybar.hidden {
 }
 
 #custom-wallpaper,
+#custom-appmenu,
 #clock,
 #pulseaudio,
 #network,
 #battery,
-#tray {
+#tray,
+#custom-exit {
     background: @surface;
     margin: 0 4px;
     padding: 0 12px;
@@ -68,10 +70,12 @@ window#waybar.hidden {
 }
 
 #custom-wallpaper:hover,
+#custom-appmenu:hover,
 #clock:hover,
 #pulseaudio:hover,
 #network:hover,
-#battery:hover {
+#battery:hover,
+#custom-exit:hover {
     background: @surface_variant;
 }
 
