@@ -1,93 +1,26 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 30,
-    "modules-left": ["niri/workspaces", "custom/keybindings"],
-    "modules-center": ["clock", "custom/system-monitor"],
-    "modules-right": ["pulseaudio", "tray"],
+    "height": 50,
+    "modules-left": ["custom/logo", "wlr/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/wallpaper"],
 
-    "niri/workspaces": {
-        "format": "{name}",
-        "format-icons": {
-            "1": "󰙯",
-            "2": "󰙯",
-            "3": "󰙯",
-            "4": "󰙯",
-            "5": "󰙯",
-            "6": "󰙯",
-            "7": "󰙯",
-            "8": "󰙯",
-            "active": "",
-            "current": "",
-            "urgent": ""
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": []
-        }
+    "wlr/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate"
     },
-
-    "custom/keybindings": {
-        "format": "⌨️  Keybindings",
-        "tooltip": false,
-        "on-click": "eww open keybinding-popup || eww close keybinding-popup",
-        "on-click-middle": "eww close keybinding-popup"
-    },
-
-    "custom/system-monitor": {
-        "format": "󰍛 {}%",
-        "exec": "~/.config/eww/scripts/system-monitor.sh cpu",
-        "interval": 2,
-        "tooltip": true,
-        "tooltip-format": "CPU: {}%\\nMEM: $(~/.config/eww/scripts/system-monitor.sh memory | cut -d'|' -f1)%\\nClick to open system monitor",
-        "on-click": "eww open system-monitor || eww close system-monitor"
-    },
-
     "clock": {
-        "format": " {:%H:%M}",
-        "format-alt": " {:%Y-%m-%d}",
-        "tooltip-format": "{:%Y-%m-%d %H:%M:%S}",
-        "calendar": {
-            "mode"          : "month",
-            "mode-mon-col"  : 3,
-            "weeks-pos"     : "right",
-            "on-scroll"     : 1,
-            "on-click-right": "mode",
-            "format": {
-                "months":     "<span color=''#ffead3''><b>{}</b></span>",
-                "days":       "<span color=''#ecc6d9''><b>{}</b></span>",
-                "weeks":      "<span color=''#99ffdd''><b>W{}</b></span>",
-                "weekdays":   "<span color=''#ffcc66''><b>{}</b></span>",
-                "today":      "<span color=''#ff6699''><b><u>{}</u></b></span>"
-            }
-        },
-        "actions": {
-            "on-click-right": "mode",
-            "on-click-forward": "tz_up",
-            "on-click-backward": "tz_down",
-            "on-scroll-up": "shift_up",
-            "on-scroll-down": "shift_down"
-        }
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\\n<tt><small>{calendar}</small></tt>"
     },
-
-    "pulseaudio": {
-        "format": " {volume}%",
-        "format-bluetooth": " {volume}%",
-        "format-bluetooth-muted": " ",
-        "format-muted": "",
-        "scroll-step": 1,
-        "on-click": "pavucontrol",
-        "tooltip-format": "{desc} - {volume}%"
+    "custom/logo": {
+        "format": "",
+        "tooltip": false
     },
-
-    "tray": {
-        "icon-size": 21,
-        "spacing": 10
+    "custom/wallpaper": {
+        "format": "",
+        "on-click": "~/.config/scripts/change_wallpaper.sh"
     }
 }

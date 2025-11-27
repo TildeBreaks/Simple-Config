@@ -1,0 +1,4 @@
+[templates]
+"~/.config/kitty/kitty.conf" = "templates/kitty.conf"
+"~/.config/dunst/dunstrc" = "templates/dunstrc"
+"~/.config/waybar/style.css" = "templates/waybar.css"
