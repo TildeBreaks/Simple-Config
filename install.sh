@@ -77,6 +77,16 @@ force_symlink "$REPO_DIR/scripts" "$CONFIG_DIR/scripts"
 mkdir -p "$CONFIG_DIR/matugen"
 force_symlink "$REPO_DIR/matugen.toml" "$CONFIG_DIR/matugen/matugen.toml"
 
+# --- Initial Theme ---
+print_msg "Generating initial default theme..."
+# This prevents Waybar and other components from crashing on first launch
+# by ensuring a valid theme file exists immediately after installation.
+matugen color "#2E3440"
+
+# --- Wallpaper Directory ---
+print_msg "Ensuring wallpaper directory exists..."
+mkdir -p "$HOME/Pictures/Wallpapers"
+
 
 # --- Final Steps ---
 print_msg "Installation complete!"

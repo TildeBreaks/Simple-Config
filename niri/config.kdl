@@ -1,11 +1,19 @@
+# To find your display output name, run `niri msg -t get-outputs` in a terminal.
+# Then, replace "eDP-1" with the correct name for your display.
 output "eDP-1" {
     scale 1.25
+}
+
+# Sensible defaults for input devices, including tap-to-click for touchpads.
+input "type:touchpad" {
+    tap enabled
 }
 
 binds {
     "Super+Space" spawn "quickshell"
     "Super+Return" spawn "kitty"
     "Super+B" spawn "zen-browser"
+    "Super+E" spawn "thunar"
 }
 
 autostart {
