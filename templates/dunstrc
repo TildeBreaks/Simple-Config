@@ -1,0 +1,17 @@
+[global]
+    font = Inter 12
+
+    [urgency_low]
+    background = "{{ .colors.surface }}"
+    foreground = "{{ .colors.on_surface }}"
+    timeout = 5
+
+    [urgency_normal]
+    background = "{{ .colors.primary_container }}"
+    foreground = "{{ .colors.on_primary_container }}"
+    timeout = 10
+
+    [urgency_critical]
+    background = "{{ .colors.error_container }}"
+    foreground = "{{ .colors.on_error_container }}"
+    timeout = 0

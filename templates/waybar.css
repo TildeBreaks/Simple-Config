@@ -1,0 +1,31 @@
+* {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background-color: {{ .colors.primary }};
+    color: {{ .colors.on_primary }};
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    background-color: transparent;
+    color: {{ .colors.on_primary }};
+}
+
+#workspaces button.active {
+    background-color: {{ .colors.primary_container }};
+    color: {{ .colors.on_primary_container }};
+}
+
+#clock,
+#custom-logo,
+#custom-wallpaper {
+    padding: 0 20px;
+    color: {{ .colors.on_primary }};
+}
