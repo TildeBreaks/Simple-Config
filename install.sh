@@ -49,34 +49,33 @@ print_msg "Installing AUR packages..."
 yay -S --needed --noconfirm "${aur_packages[@]}"
 
 
-# --- Configuration Setup (Non-Destructive) ---
+# --- Configuration Setup (Destructive) ---
 print_msg "Setting up configuration files..."
 CONFIG_DIR="$HOME/.config"
 REPO_DIR=$(pwd)
 
-# Function to safely create a symbolic link
-safe_symlink() {
+# Function to forcefully create a symbolic link, overwriting if necessary
+force_symlink() {
     local source="$1"
     local target="$2"
 
-    if [ -e "$target" ]; then
-        print_msg "Configuration already exists at $target. Skipping."
-    else
-        ln -s "$source" "$target"
-        echo "Linked $source to $target."
-    fi
+    # -s: create a symbolic link
+    # -f: remove existing destination files
+    # -n: if destination is a symlink to a directory, treat it as a file
+    ln -sfn "$source" "$target"
+    echo "Linked $source to $target."
 }
 
 # Create symlinks for the configuration directories
-safe_symlink "$REPO_DIR/niri" "$CONFIG_DIR/niri"
-safe_symlink "$REPO_DIR/waybar" "$CONFIG_DIR/waybar"
-safe_symlink "$REPO_DIR/kitty" "$CONFIG_DIR/kitty"
-safe_symlink "$REPO_DIR/dunst" "$CONFIG_DIR/dunst"
-safe_symlink "$REPO_DIR/scripts" "$CONFIG_DIR/scripts"
+force_symlink "$REPO_DIR/niri" "$CONFIG_DIR/niri"
+force_symlink "$REPO_DIR/waybar" "$CONFIG_DIR/waybar"
+force_symlink "$REPO_DIR/kitty" "$CONFIG_DIR/kitty"
+force_symlink "$REPO_DIR/dunst" "$CONFIG_DIR/dunst"
+force_symlink "$REPO_DIR/scripts" "$CONFIG_DIR/scripts"
 
 # Create symlink for the matugen configuration
 mkdir -p "$CONFIG_DIR/matugen"
-safe_symlink "$REPO_DIR/matugen.toml" "$CONFIG_DIR/matugen/matugen.toml"
+force_symlink "$REPO_DIR/matugen.toml" "$CONFIG_DIR/matugen/matugen.toml"
 
 
 # --- Final Steps ---
